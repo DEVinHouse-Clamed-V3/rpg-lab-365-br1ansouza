@@ -1,6 +1,7 @@
 import { Arma } from './Arma';
 import { Inimigo } from './Inimigo';
 import { Personagem } from './Personagem';
+import { Chefe } from './Chefe';
 
 // criando 3 armas
 const espadaLonga = new Arma("Espada Enferrujada Longa", 50, "Uma espada clássica de metal, com marcas severas do tempo, e ideal para combates de média distância.");
@@ -17,38 +18,42 @@ const heroi = new Personagem("Herói", 400, 50);
 heroi.equiparArma(espadaLonga);
 console.log(`\nPersonagem criado: ${heroi.getNome()} com vida ${heroi.getVida()} e arma ${heroi.getArma()?.getNome()}`);
 
-// criando 5 inimigos
-const inimigo1 = new Inimigo("Goblin", 100, 10, machadoDeGuerra);
-const inimigo2 = new Inimigo("Orc", 150, 15, arcoCurto);
-const inimigo3 = new Inimigo("Troll", 180, 20);
-const inimigo4 = new Inimigo("Esqueleto", 80, 12, machadoDeGuerra);
-const inimigo5 = new Inimigo("Dragão", 500, 50);
-
-console.log(`\nInimigos criados:`);
-console.log(`${inimigo1.getNome()} com vida ${inimigo1.getVida()} e arma ${inimigo1.getArma()?.getNome()}`);
-console.log(`${inimigo2.getNome()} com vida ${inimigo2.getVida()} e arma ${inimigo2.getArma()?.getNome()}`);
-console.log(`${inimigo3.getNome()} com vida ${inimigo3.getVida()} e arma ${inimigo3.getArma()?.getNome() || "Nenhuma"}`);
-console.log(`${inimigo4.getNome()} com vida ${inimigo4.getVida()} e arma ${inimigo4.getArma()?.getNome()}`);
-console.log(`${inimigo5.getNome()} com vida ${inimigo5.getVida()} e arma ${inimigo5.getArma()?.getNome() || "Nenhuma"}`);
-
-const inimigos = [inimigo1, inimigo2, inimigo3, inimigo4, inimigo5];
+// criando inimigos
+const goblin = new Inimigo("Goblin", 100, 10, machadoDeGuerra);
+const orc = new Inimigo("Orc", 150, 25, arcoCurto);
+const chefe = new Chefe("Dragão", 400, 50, machadoDeGuerra);
 
 // interações
 console.log("\n=== INÍCIO DO COMBATE ===");
 
+while (heroi.getVida() > 0 && (goblin.getVida() > 0 || orc.getVida() > 0 || chefe.getVida() > 0)) {
+    if (goblin.getVida() > 0) {
+        console.log(`\n${heroi.getNome()} ataca ${goblin.getNome()}!`);
+        heroi.atacar(goblin);
 
-while (heroi.getVida() > 0 && inimigos.some((inimigo) => inimigo.getVida() > 0)) {
-    const inimigoAtual = inimigos.find((inimigo) => inimigo.getVida() > 0);
+        if (goblin.getVida() > 0) {
+            console.log(`${goblin.getNome()} contra-ataca ${heroi.getNome()}!`);
+            goblin.atacar(heroi);
+        }
+    }
 
-    if (inimigoAtual) {
-        console.log(`\n${heroi.getNome()} ataca ${inimigoAtual.getNome()}!`);
-        heroi.atacar(inimigoAtual);
+    if (orc.getVida() > 0) {
+        console.log(`\n${heroi.getNome()} ataca ${orc.getNome()}!`);
+        heroi.atacar(orc);
 
-        if (inimigoAtual.getVida() <= 0) {
-            console.log(`${inimigoAtual.getNome()} foi derrotado!`);
-        } else {
-            console.log(`${inimigoAtual.getNome()} contra-ataca ${heroi.getNome()}!`);
-            inimigoAtual.atacar(heroi);
+        if (orc.getVida() > 0) {
+            console.log(`${orc.getNome()} contra-ataca ${heroi.getNome()}!`);
+            orc.atacar(heroi);
+        }
+    }
+
+    if (chefe.getVida() > 0) {
+        console.log(`\n${heroi.getNome()} ataca ${chefe.getNome()}!`);
+        heroi.atacar(chefe);
+
+        if (chefe.getVida() > 0) {
+            console.log(`${chefe.getNome()} contra-ataca ${heroi.getNome()}!`);
+            chefe.atacar(heroi);
         }
     }
 }
