@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/Arma.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/Arma.ts"  },
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"  },
   "keywords": [],
   "author": "",
   "license": "ISC",
