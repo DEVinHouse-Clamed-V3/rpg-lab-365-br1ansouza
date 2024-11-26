@@ -18,7 +18,7 @@ export class Inimigo extends Personagem {
         alvo.receberDano(dano);
     }
 
-    // Método para definir comportamento aleatório
+    // definido comportamento aleatório
     public comportamentoAleatorio(jogador: Personagem): void {
         const acao = Math.random();
         if (acao < 0.5) {
